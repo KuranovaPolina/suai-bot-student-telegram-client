@@ -1,5 +1,6 @@
 import logging
 
+from datetime import datetime
 from aiogram import Dispatcher
 from aiogram.types import Message, CallbackQuery
 from tg_bot.keyboards.inline import days_scroll
@@ -8,13 +9,11 @@ from tg_bot.test_schedule_data import test_schedule_data
 
 class Day:
     weekType = test_schedule_data["actual_week_type"]
-
-    def __init__(self, week_day):
-        self.weekDay = week_day
+    weekDay = datetime.weekday(datetime.today())
 
 
 async def schedule_schedule(message: Message):
-    await message.answer(text=f"Start info; week type: {Day.weekType}",
+    await message.answer(text=f"Start info; week type: {Day.weekType}, day: {Day.weekDay}",
                          reply_markup=days_scroll)
 
 
@@ -31,7 +30,13 @@ async def previous_day(call: CallbackQuery):
 
     logging.info(f"{callback_data=}")
 
-    await call.message.edit_text(text=f"Previous day info; week type: {Day.weekType}")
+    if Day.weekDay == 0:
+        Day.weekType = 1 if Day.weekType == 0 else 0
+        Day.weekDay = 6
+    else:
+        Day.weekDay -= 1
+
+    await call.message.edit_text(text=f"Previous day info; week type: {Day.weekType}, day: {Day.weekDay}")
     await call.message.edit_reply_markup(reply_markup=days_scroll)
 
 
@@ -46,7 +51,13 @@ async def next_day(call: CallbackQuery):
 
     logging.info(f"{callback_data=}")
 
-    await call.message.edit_text(text=f"Next day info; week type: {Day.weekType}")
+    if Day.weekDay == 6:
+        Day.weekType = 1 if Day.weekType == 0 else 0
+        Day.weekDay = 0
+    else:
+        Day.weekDay += 1
+
+    await call.message.edit_text(text=f"Next day info; week type: {Day.weekType}, day: {Day.weekDay}")
     await call.message.edit_reply_markup(reply_markup=days_scroll)
 
 
@@ -62,7 +73,7 @@ async def change_week(call: CallbackQuery):
     logging.info(f"{callback_data=}")
 
     Day.weekType = 1 if Day.weekType == 0 else 0
-    await call.message.edit_text(text=f"Another week info; week type: {Day.weekType}")
+    await call.message.edit_text(text=f"Another week info; week type: {Day.weekType}, day: {Day.weekDay}")
     await call.message.edit_reply_markup(reply_markup=days_scroll)
 
 
