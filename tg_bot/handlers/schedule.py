@@ -17,7 +17,7 @@ def register_schedule(dp: Dispatcher):
 
 
 async def previous_day(call: CallbackQuery):
-    await call.answer(cache_time=10)
+    await call.answer(cache_time=1)
 
     callback_data = call.data
 
@@ -32,7 +32,7 @@ def register_pr_day(dp: Dispatcher):
 
 
 async def next_day(call: CallbackQuery):
-    await call.answer(cache_time=10)
+    await call.answer(cache_time=1)
 
     callback_data = call.data
 
@@ -47,7 +47,7 @@ def register_next_day(dp: Dispatcher):
 
 
 async def change_week(call: CallbackQuery):
-    await call.answer(cache_time=10)
+    await call.answer(cache_time=1)
 
     callback_data = call.data
 
