@@ -3,10 +3,18 @@ import logging
 from aiogram import Dispatcher
 from aiogram.types import Message, CallbackQuery
 from tg_bot.keyboards.inline import days_scroll
+from tg_bot.test_schedule_data import test_schedule_data
+
+
+class Day:
+    weekType = test_schedule_data["actual_week_type"]
+
+    def __init__(self, week_day):
+        self.weekDay = week_day
 
 
 async def schedule_schedule(message: Message):
-    await message.answer(text="Start info",
+    await message.answer(text=f"Start info; week type: {Day.weekType}",
                          reply_markup=days_scroll)
 
 
@@ -23,7 +31,7 @@ async def previous_day(call: CallbackQuery):
 
     logging.info(f"{callback_data=}")
 
-    await call.message.edit_text(text="Previous day info")
+    await call.message.edit_text(text=f"Previous day info; week type: {Day.weekType}")
     await call.message.edit_reply_markup(reply_markup=days_scroll)
 
 
@@ -38,7 +46,7 @@ async def next_day(call: CallbackQuery):
 
     logging.info(f"{callback_data=}")
 
-    await call.message.edit_text(text="Next day info")
+    await call.message.edit_text(text=f"Next day info; week type: {Day.weekType}")
     await call.message.edit_reply_markup(reply_markup=days_scroll)
 
 
@@ -53,7 +61,8 @@ async def change_week(call: CallbackQuery):
 
     logging.info(f"{callback_data=}")
 
-    await call.message.edit_text(text="Another week info")
+    Day.weekType = 1 if Day.weekType == 0 else 0
+    await call.message.edit_text(text=f"Another week info; week type: {Day.weekType}")
     await call.message.edit_reply_markup(reply_markup=days_scroll)
 
 
