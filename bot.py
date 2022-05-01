@@ -12,6 +12,8 @@ from tg_bot.handlers.echo import register_echo
 # from tg_bot.handlers.user import register_user
 from tg_bot.middlewares.db import DbMiddleware
 
+from tg_bot.handlers.schedule import register_schedule
+
 logger = logging.getLogger(__name__)
 
 
@@ -28,6 +30,7 @@ def register_all_handlers(dp):
     # register_user(dp)
     #
     # register_echo(dp)
+    register_schedule(dp)
 
 
 async def main():
