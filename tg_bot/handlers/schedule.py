@@ -5,6 +5,7 @@ from aiogram import Dispatcher
 from aiogram.types import Message, CallbackQuery
 from tg_bot.keyboards.inline import days_scroll
 from tg_bot.test_schedule_data import test_schedule_data
+from tg_bot.creating_formatted_text import schedule_text
 
 
 class Day:
@@ -13,8 +14,8 @@ class Day:
 
 
 async def schedule_schedule(message: Message):
-    await message.answer(text=f"Start info; week type: {Day.weekType}, day: {Day.weekDay}",
-                         reply_markup=days_scroll)
+    await message.answer(text=schedule_text(Day.weekType, Day.weekDay),
+                         reply_markup=days_scroll, parse_mode="HTML")
 
 
 def register_schedule(dp: Dispatcher):
@@ -36,7 +37,7 @@ async def previous_day(call: CallbackQuery):
     else:
         Day.weekDay -= 1
 
-    await call.message.edit_text(text=f"Previous day info; week type: {Day.weekType}, day: {Day.weekDay}")
+    await call.message.edit_text(text=schedule_text(Day.weekType, Day.weekDay))
     await call.message.edit_reply_markup(reply_markup=days_scroll)
 
 
@@ -57,7 +58,7 @@ async def next_day(call: CallbackQuery):
     else:
         Day.weekDay += 1
 
-    await call.message.edit_text(text=f"Next day info; week type: {Day.weekType}, day: {Day.weekDay}")
+    await call.message.edit_text(text=schedule_text(Day.weekType, Day.weekDay))
     await call.message.edit_reply_markup(reply_markup=days_scroll)
 
 
@@ -73,7 +74,7 @@ async def change_week(call: CallbackQuery):
     logging.info(f"{callback_data=}")
 
     Day.weekType = 1 if Day.weekType == 0 else 0
-    await call.message.edit_text(text=f"Another week info; week type: {Day.weekType}, day: {Day.weekDay}")
+    await call.message.edit_text(text=schedule_text(Day.weekType, Day.weekDay))
     await call.message.edit_reply_markup(reply_markup=days_scroll)
 
 
