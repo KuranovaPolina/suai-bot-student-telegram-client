@@ -8,11 +8,9 @@ from aiogram.contrib.fsm_storage.memory import MemoryStorage
 from tg_bot.config import load_config
 from tg_bot.filters.admin import AdminFilter
 from tg_bot.handlers.admin import register_admin
-from tg_bot.handlers.echo import register_echo
-# from tg_bot.handlers.user import register_user
+from tg_bot.handlers.schedule import register_schedule, register_pr_day, register_next_day, register_change_week
 from tg_bot.middlewares.db import DbMiddleware
 
-from tg_bot.handlers.schedule import register_schedule
 
 logger = logging.getLogger(__name__)
 
@@ -27,10 +25,10 @@ def register_all_filters(dp):
 
 def register_all_handlers(dp):
     register_admin(dp)
-    # register_user(dp)
-    #
-    # register_echo(dp)
     register_schedule(dp)
+    register_pr_day(dp)
+    register_next_day(dp)
+    register_change_week(dp)
 
 
 async def main():
