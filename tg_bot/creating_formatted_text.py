@@ -1,37 +1,48 @@
 from tg_bot.test_schedule_data import test_schedule_data
 
 days_name = {
-    0: "Понедельник",
-    1: "Вторник",
-    2: "Среда",
-    3: "Четверг",
-    4: "Пятница",
-    5: "Суббота",
-    6: "Воскресенье"
+    1: "Понедельник",
+    2: "Вторник",
+    3: "Среда",
+    4: "Четверг",
+    5: "Пятница",
+    6: "Суббота",
+    7: "Воскресенье"
 }
 
 week_name = {
-    0: ("чётная", "нижняя", "синяя"),
-    1: ("нечётная", "верхняя", "красная")
+    1: ("нечётная", "верхняя", "красная"),
+    2: ("чётная", "нижняя", "синяя")
+}
+
+types_name = {
+    1: "Лекция",
+    2: "Практическое",
+    3: "Лабораторное",
+    4: "Коллоквиум",
+    5: "Элективное"
 }
 
 
 def schedule_text(week_type, week_day):
     lessons_finded = False
-    result = f"Расписание на:\n" \
-             f"{days_name[week_day]}, " \
-             f"{week_name[week_type][0]} - {week_name[week_type][1]} - {week_name[week_type][2]} неделя"
+    result = f"<b>Расписание на:</b>\n" \
+             f"<i>{days_name[week_day]}, " \
+             f"{week_name[week_type][0]} - " \
+             f"{week_name[week_type][1]} - " \
+             f"{week_name[week_type][2]} неделя</i>"
     for i in test_schedule_data["lessons"]:
         if i["weekDay"] == week_day and i["weekType"] == week_type:
             lessons_finded = True
-            result += f'\nГруппа: {i["group"]}\n' \
-                      f'Преподаватель: {i["teacher"]}\n' \
-                      f'Аудитория: {i["classRoom"]}\n' \
-                      f'Здание: {i["building"]}\n' \
-                      f'Предмет: {i["lessonName"]}\n' \
-                      f'Время начала: {i["startTime"]}\n' \
-                      f'Время окончания: {i["endTime"]}\n' \
-                      f'Номер пары: {i["order"]}\n'
+            result += f'\n<b>Группа:</b> {i["group"]}\n' \
+                      f'<b>Преподаватель:</b> {i["teacher"]}\n' \
+                      f'<b>Аудитория:</b> {i["classRoom"]}\n' \
+                      f'<b>Здание:</b> {i["building"]}\n' \
+                      f'<b>Предмет:</b> {i["lessonName"]}\n' \
+                      f'<b>Время начала:</b> {i["startTime"]}\n' \
+                      f'<b>Время окончания:</b> {i["endTime"]}\n' \
+                      f'<b>Номер пары:</b> {i["orderNumber"]}\n' \
+                      f'<b>Тип занятия:</b> {types_name[i["lessonType"]]}\n'
                       # f'День недели: {i["weekDay"]}\n' \
                       # f'Тип недели: {i["weekType"]}\n'
 

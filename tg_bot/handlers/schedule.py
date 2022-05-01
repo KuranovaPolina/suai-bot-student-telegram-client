@@ -9,8 +9,8 @@ from tg_bot.creating_formatted_text import schedule_text
 
 
 class Day:
-    weekType = test_schedule_data["actual_week_type"]
-    weekDay = datetime.weekday(datetime.today())
+    weekType = test_schedule_data["actualWeekType"]
+    weekDay = datetime.isoweekday(datetime.today())
 
 
 async def schedule_schedule(message: Message):
@@ -31,13 +31,13 @@ async def previous_day(call: CallbackQuery):
 
     logging.info(f"{callback_data=}")
 
-    if Day.weekDay == 0:
-        Day.weekType = 1 if Day.weekType == 0 else 0
-        Day.weekDay = 6
+    if Day.weekDay == 1:
+        Day.weekType = 2 if Day.weekType == 1 else 1
+        Day.weekDay = 7
     else:
         Day.weekDay -= 1
 
-    await call.message.edit_text(text=schedule_text(Day.weekType, Day.weekDay))
+    await call.message.edit_text(text=schedule_text(Day.weekType, Day.weekDay), parse_mode="HTML")
     await call.message.edit_reply_markup(reply_markup=days_scroll)
 
 
@@ -52,13 +52,13 @@ async def next_day(call: CallbackQuery):
 
     logging.info(f"{callback_data=}")
 
-    if Day.weekDay == 6:
-        Day.weekType = 1 if Day.weekType == 0 else 0
-        Day.weekDay = 0
+    if Day.weekDay == 7:
+        Day.weekType = 2 if Day.weekType == 1 else 1
+        Day.weekDay = 1
     else:
         Day.weekDay += 1
 
-    await call.message.edit_text(text=schedule_text(Day.weekType, Day.weekDay))
+    await call.message.edit_text(text=schedule_text(Day.weekType, Day.weekDay), parse_mode="HTML")
     await call.message.edit_reply_markup(reply_markup=days_scroll)
 
 
@@ -73,8 +73,8 @@ async def change_week(call: CallbackQuery):
 
     logging.info(f"{callback_data=}")
 
-    Day.weekType = 1 if Day.weekType == 0 else 0
-    await call.message.edit_text(text=schedule_text(Day.weekType, Day.weekDay))
+    Day.weekType = 2 if Day.weekType == 1 else 1
+    await call.message.edit_text(text=schedule_text(Day.weekType, Day.weekDay), parse_mode="HTML")
     await call.message.edit_reply_markup(reply_markup=days_scroll)
 
 

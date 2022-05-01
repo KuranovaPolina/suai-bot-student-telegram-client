@@ -1,103 +1,57 @@
 test_schedule_data = {
-    "university": "SUAI",
-    "actual_week_type": 0,
-    "lessons":
-      [
-        {
-          "group": "1011",
-          "teacher": "test_prep1",
-          "classRoom": "test_aud1",
-          "building": "test_building_1",
-          "lessonName": "test_lesson1",
-          "startTime": "9:30",
-          "endTime": "11:00",
-          "order": 1,
-          "weekDay": 0,
-          "weekType": 0
-        },
-        {
-          "group": "1011",
-          "teacher": "test_prep2",
-          "classRoom": "test_aud2",
-          "building": "test_building1",
-          "lessonName": "test_lesson2",
-          "startTime": "11:10",
-          "endTime": "12:40",
-          "order": 2,
-          "weekDay": 0,
-          "weekType": 0
-        },
-        {
-            "group": "1011",
-            "teacher": "test_prep3",
-            "classRoom": "test_aud2",
-            "building": "test_building1",
-            "lessonName": "test_lesson4",
-            "startTime": "9:30",
-            "endTime": "11:00",
-            "order": 1,
-            "weekDay": 1,
-            "weekType": 0
-          },
-          {
-            "group": "1011",
-            "teacher": "test_prep4_upper",
-            "classRoom": "test_aud43_upper",
-            "building": "test_building4_upper",
-            "lessonName": "test_lesson653_upper",
-            "startTime": "11:10",
-            "endTime": "12:40",
-            "order": 2,
-            "weekDay": 1,
-            "weekType": 0
-          },
-          {
-            "group": "1011",
-            "teacher": "test_prep1_upper",
-            "classRoom": "test_aud1_upper",
-            "building": "test_building_1_upper",
-            "lessonName": "test_lesson1_upper",
-            "startTime": "9:30",
-            "endTime": "11:00",
-            "order": 1,
-            "weekDay": 0,
-            "weekType": 1
-          },
-          {
-            "group": "1011",
-            "teacher": "test_prep2_upper",
-            "classRoom": "test_aud2_upper",
-            "building": "test_building1_upper",
-            "lessonName": "test_lesson2_upper",
-            "startTime": "11:10",
-            "endTime": "12:40",
-            "order": 2,
-            "weekDay": 0,
-            "weekType": 1
-          },
-          {
-              "group": "1011",
-              "teacher": "test_prep3_upper",
-              "classRoom": "test_aud2_upper",
-              "building": "test_building1_upper",
-              "lessonName": "test_lesson4_upper",
-              "startTime": "9:30",
-              "endTime": "11:00",
-              "order": 1,
-              "weekDay": 1,
-              "weekType": 1
-            },
-            {
-              "group": "1011",
-              "teacher": "test_prep4_upper",
-              "classRoom": "test_aud43_upper",
-              "building": "test_building4_upper",
-              "lessonName": "test_lesson653_upper",
-              "startTime": "11:10",
-              "endTime": "12:40",
-              "order": 2,
-              "weekDay": 1,
-              "weekType": 1
-            }
-      ]
-  }
+  "actualWeekType": 1,
+  "lessons": [
+    {
+      "group": "test_group 1",
+      "teacher": "test_teacher 1",
+      "classRoom": "test_class_room 1",
+      "building": "test_building 1",
+      "lessonName": "test_lesson 1",
+      "startTime": "9:30",
+      "endTime": "11:00",
+      "orderNumber": 1,
+      "weekDay": 2,
+      "weekType": 1,
+      "lessonType": 1
+    },
+    {
+      "group": "test_group 1",
+      "teacher": "test_teacher 2",
+      "classRoom": "test_class_room 2",
+      "building": "test_building 2",
+      "lessonName": "test_lesson 2",
+      "startTime": "11:10",
+      "endTime": "12:40",
+      "orderNumber": 2,
+      "weekDay": 3,
+      "weekType": 1,
+      "lessonType": 2
+    },
+    {
+      "group": "test_group 1",
+      "teacher": "test_teacher 1",
+      "classRoom": "test_class_room 3",
+      "building": "test_building 1",
+      "lessonName": "test_lesson 1",
+      "startTime": "13:00",
+      "endTime": "14:30",
+      "orderNumber": 3,
+      "weekDay": 1,
+      "weekType": 2,
+      "lessonType": 3
+    },
+    {
+      "group": "test_group 1",
+      "teacher": "test_teacher 3",
+      "classRoom": "test_class_room 4",
+      "building": "test_building 3",
+      "lessonName": "test_lesson 5",
+      "startTime": "15:00",
+      "endTime": "16:30",
+      "orderNumber": 4,
+      "weekDay": 5,
+      "weekType": 2,
+      "lessonType": 1
+    }
+  ]
+}
