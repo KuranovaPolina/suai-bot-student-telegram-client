@@ -11,8 +11,8 @@ days_name = {
 }
 
 week_name = {
-    1: ("нечётная", "верхняя", "красная"),
-    2: ("чётная", "нижняя", "синяя")
+    1: ("нечётная", "⬆️", "🔴"),
+    2: ("чётная", "⬇️", "🔵")
 }
 
 types_name = {
@@ -29,22 +29,19 @@ def format_timetable_text(week_type, week_day):
 
     result = f"<b>Расписание на:</b>\n" \
              f"<i>{days_name[week_day]}, " \
-             f"{week_name[week_type][0]} - " \
-             f"{week_name[week_type][1]} - " \
-             f"{week_name[week_type][2]} неделя</i>"
+             f"{week_name[week_type][2]}" \
+             f"{week_name[week_type][1]} " \
+             f"{week_name[week_type][0]} неделя</i>\n"
 
     for lesson in test_timetable_data["lessons"]:
         if lesson["weekDay"] == week_day and lesson["weekType"] == week_type:
             lessons_finded = True
-            result += f'\n<b>Группа:</b> {lesson["group"]}\n' \
+            result += f'\n<b>{lesson["orderNumber"]}.</b> {lesson["startTime"]} - {lesson["endTime"]}\n' \
+                      f'<b>Предмет:</b> {lesson["lessonName"]}, {types_name[lesson["lessonType"]]}\n' \
                       f'<b>Преподаватель:</b> {lesson["teacher"]}\n' \
                       f'<b>Аудитория:</b> {lesson["classRoom"]}\n' \
-                      f'<b>Здание:</b> {lesson["building"]}\n' \
-                      f'<b>Предмет:</b> {lesson["lessonName"]}\n' \
-                      f'<b>Время начала:</b> {lesson["startTime"]}\n' \
-                      f'<b>Время окончания:</b> {lesson["endTime"]}\n' \
-                      f'<b>Номер пары:</b> {lesson["orderNumber"]}\n' \
-                      f'<b>Тип занятия:</b> {types_name[lesson["lessonType"]]}\n'
+                      f'<b>Корпус:</b> {lesson["building"]}\n' \
+                      f'<b>Группы:</b> {lesson["group"]}\n'
 
     if not lessons_finded:
         result += f'\nВыходной'
