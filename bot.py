@@ -24,8 +24,7 @@ async def main():
     config = load_config(".env")
 
     bot = Bot(token=config.tg_bot.token, parse_mode="HTML")
-    storage = RedisStorage2() if config.tg_bot.use_redis else MemoryStorage()
-    dp = Dispatcher(bot, storage=storage)
+    dp = Dispatcher(bot)
     bot['config'] = config
 
     register_all_handlers(dp)
