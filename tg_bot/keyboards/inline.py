@@ -3,7 +3,7 @@ from aiogram.types import InlineKeyboardMarkup, InlineKeyboardButton
 days_scroll = InlineKeyboardMarkup(
     inline_keyboard=[
         [
-            InlineKeyboardButton(text="<<", callback_data="scroll_pr_day"),
+            InlineKeyboardButton(text="<<", callback_data="scroll_previous_day"),
             InlineKeyboardButton(text=">>", callback_data="scroll_next_day")
         ],
         [

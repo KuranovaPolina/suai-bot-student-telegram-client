@@ -43,9 +43,9 @@ async def scroll_previous_day(call: CallbackQuery):
     await call.message.edit_reply_markup(reply_markup=days_scroll)
 
 
-def register_pr_day(dp: Dispatcher):
+def register_prev_day(dp: Dispatcher):
     dp.register_callback_query_handler(scroll_previous_day,
-                                       text=["scroll_pr_day"])
+                                       text=["scroll_previous_day"])
 
 
 async def scroll_next_day(call: CallbackQuery):
@@ -91,6 +91,6 @@ def register_change_week(dp: Dispatcher):
 
 def register_full_timetable(dp: Dispatcher):
     register_timetable(dp)
-    register_pr_day(dp)
+    register_prev_day(dp)
     register_next_day(dp)
     register_change_week(dp)
