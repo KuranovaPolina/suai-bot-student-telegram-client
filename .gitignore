@@ -127,3 +127,9 @@ dmypy.json
 
 # Pyre type checker
 .pyre/
+/tg_bot/filters/
+/tg_bot/filters/__init__.py
+/tg_bot/filters/admin.py
+
+/tg_bot/handlers/admin.py
+/tg_bot/handlers/echo.py
