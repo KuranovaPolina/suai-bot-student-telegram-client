@@ -130,11 +130,14 @@ dmypy.json
 tg_bot/filters/
 tg_bot/filters/__init__.py
 tg_bot/filters/admin.py
-
 /tg_bot/handlers/admin.py
 /tg_bot/handlers/echo.py
 /tg_bot/misc/
 /tg_bot/misc/__init__.py
 /tg_bot/misc/states.py
+
 /tg_bot/models/
 /tg_bot/services/
+
+/tg_bot/keyboards/reply.py
+/tg_bot/middlewares/

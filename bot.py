@@ -6,20 +6,21 @@ from aiogram.contrib.fsm_storage.redis import RedisStorage2
 from aiogram.contrib.fsm_storage.memory import MemoryStorage
 
 from tg_bot.config import load_config
-# from tg_bot.filters.admin import AdminFilter
+# from tg_bot.filters1.admin import AdminFilter
 # from tg_bot.handlers.admin import register_admin
 from tg_bot.handlers.timetable import register_timetable, \
     register_pr_day, \
     register_next_day, \
     register_change_week
-from tg_bot.middlewares.db import DbMiddleware
+# from tg_bot.middlewares1.db import DbMiddleware
 
 
 logger = logging.getLogger(__name__)
 
 
 def register_all_middlewares(dp):
-    dp.setup_middleware(DbMiddleware())
+    # dp.setup_middleware(DbMiddleware())
+    pass
 
 
 def register_all_filters(dp):
