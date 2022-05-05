@@ -48,7 +48,7 @@ async def scroll_previous_day(call: CallbackQuery):
 
 def register_previous_day(dp: Dispatcher):
     dp.register_callback_query_handler(scroll_previous_day,
-                                       text=["scroll_pr_day"])
+                                       text=["scroll_previous_day"])
 
 
 async def scroll_next_day(call: CallbackQuery):
