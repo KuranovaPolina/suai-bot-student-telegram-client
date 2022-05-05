@@ -4,8 +4,8 @@ from datetime import datetime
 from aiogram import Dispatcher
 from aiogram.types import Message, CallbackQuery
 from tg_bot.keyboards.inline import days_scroll
-from tg_bot.test_timetable_data import test_timetable_data
-from tg_bot.creating_formatted_text import format_timetable_text
+from tg_bot.test_data.test_timetable_data import test_timetable_data
+from tg_bot.text_format.timetable_text import format_timetable_text
 
 
 class Day:

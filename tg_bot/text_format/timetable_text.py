@@ -1,4 +1,4 @@
-from tg_bot.test_timetable_data import test_timetable_data
+from tg_bot.test_data.test_timetable_data import test_timetable_data
 
 days_name = {
     1: "Понедельник",
