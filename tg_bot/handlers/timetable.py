@@ -13,14 +13,14 @@ class Day:
     weekDay = datetime.isoweekday(datetime.today())
 
 
-async def create_timetable(message: Message):
+async def display_timetable(message: Message):
     await message.answer(text=format_timetable_text(Day.weekType, Day.weekDay),
                          reply_markup=days_scroll,
                          parse_mode="HTML")
 
 
 def register_timetable(dp: Dispatcher):
-    dp.register_message_handler(create_timetable,
+    dp.register_message_handler(display_timetable,
                                 commands=["timetable"],
                                 state="*")
 
