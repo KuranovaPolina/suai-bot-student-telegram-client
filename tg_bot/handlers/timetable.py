@@ -11,6 +11,9 @@ from tg_bot.text_format.timetable_text import format_timetable_text
 class Day:
     weekType: int = test_timetable_data["actualWeekType"]
     weekDay: int = datetime.isoweekday(datetime.today())
+    # def __init__(self, week_type: int, week_day: int):
+    #     weekType: int = test_timetable_data["actualWeekType"]
+    #     weekDay: int = datetime.isoweekday(datetime.today())
 
 
 async def display_timetable(message: Message):
@@ -43,9 +46,9 @@ async def scroll_previous_day(call: CallbackQuery):
     await call.message.edit_reply_markup(reply_markup=days_scroll)
 
 
-def register_prev_day(dp: Dispatcher):
+def register_previous_day(dp: Dispatcher):
     dp.register_callback_query_handler(scroll_previous_day,
-                                       text=["scroll_previous_day"])
+                                       text=["scroll_pr_day"])
 
 
 async def scroll_next_day(call: CallbackQuery):
@@ -91,6 +94,6 @@ def register_change_week(dp: Dispatcher):
 
 def register_full_timetable(dp: Dispatcher):
     register_timetable(dp)
-    register_prev_day(dp)
+    register_previous_day(dp)
     register_next_day(dp)
     register_change_week(dp)
