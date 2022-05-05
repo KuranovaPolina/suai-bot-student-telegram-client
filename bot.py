@@ -6,20 +6,14 @@ from aiogram.contrib.fsm_storage.redis import RedisStorage2
 from aiogram.contrib.fsm_storage.memory import MemoryStorage
 
 from tg_bot.config import load_config
-from tg_bot.handlers.timetable import register_timetable, \
-    register_pr_day, \
-    register_next_day, \
-    register_change_week
+from tg_bot.handlers.timetable import register_full_timetable
 
 
 logger = logging.getLogger(__name__)
 
 
 def register_all_handlers(dp):
-    register_timetable(dp)
-    register_pr_day(dp)
-    register_next_day(dp)
-    register_change_week(dp)
+    register_full_timetable(dp)
 
 
 async def main():

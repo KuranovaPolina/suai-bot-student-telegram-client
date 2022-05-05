@@ -87,3 +87,10 @@ async def change_week(call: CallbackQuery):
 def register_change_week(dp: Dispatcher):
     dp.register_callback_query_handler(change_week,
                                        text=["change_week"])
+
+
+def register_full_timetable(dp: Dispatcher):
+    register_timetable(dp)
+    register_pr_day(dp)
+    register_next_day(dp)
+    register_change_week(dp)
