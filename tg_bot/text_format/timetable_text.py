@@ -25,17 +25,17 @@ types_name = {
 
 
 def format_timetable_text(week_type: int, week_day: int) -> str:
-    lessons_finded: bool = False
+    lessons_found: bool = False
 
     result: str = f"<b>Расписание на:</b>\n" \
-             f"<i>{days_name[week_day]}, " \
-             f"{week_name[week_type][2]}" \
-             f"{week_name[week_type][1]} " \
-             f"{week_name[week_type][0]} неделя</i>\n"
+                  f"<i>{days_name[week_day]}, " \
+                  f"{week_name[week_type][2]}" \
+                  f"{week_name[week_type][1]} " \
+                  f"{week_name[week_type][0]} неделя</i>\n"
 
     for lesson in test_timetable_data["lessons"]:
         if lesson["weekDay"] == week_day and lesson["weekType"] == week_type:
-            lessons_finded = True
+            lessons_found = True
             result += f'\n<b>{lesson["orderNumber"]}.</b> {lesson["startTime"]} - {lesson["endTime"]}\n' \
                       f'<b>Предмет:</b> {lesson["lessonName"]}, {types_name[lesson["lessonType"]]}\n' \
                       f'<b>Преподаватель:</b> {lesson["teacher"]}\n' \
@@ -43,7 +43,7 @@ def format_timetable_text(week_type: int, week_day: int) -> str:
                       f'<b>Корпус:</b> {lesson["building"]}\n' \
                       f'<b>Группы:</b> {lesson["group"]}\n'
 
-    if not lessons_finded:
+    if not lessons_found:
         result += f'\nВыходной'
 
     return result
