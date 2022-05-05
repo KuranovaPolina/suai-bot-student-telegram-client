@@ -9,8 +9,8 @@ from tg_bot.text_format.timetable_text import format_timetable_text
 
 
 class Day:
-    weekType = test_timetable_data["actualWeekType"]
-    weekDay = datetime.isoweekday(datetime.today())
+    weekType: int = test_timetable_data["actualWeekType"]
+    weekDay: int = datetime.isoweekday(datetime.today())
 
 
 async def display_timetable(message: Message):

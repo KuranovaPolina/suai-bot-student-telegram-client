@@ -24,10 +24,10 @@ types_name = {
 }
 
 
-def format_timetable_text(week_type, week_day):
-    lessons_finded = False
+def format_timetable_text(week_type: int, week_day: int) -> str:
+    lessons_finded: bool = False
 
-    result = f"<b>Расписание на:</b>\n" \
+    result: str = f"<b>Расписание на:</b>\n" \
              f"<i>{days_name[week_day]}, " \
              f"{week_name[week_type][2]}" \
              f"{week_name[week_type][1]} " \
