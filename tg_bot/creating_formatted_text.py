@@ -1,4 +1,4 @@
-from tg_bot.test_schedule_data import test_schedule_data
+from tg_bot.test_timetable_data import test_timetable_data
 
 days_name = {
     1: "Понедельник",
@@ -24,27 +24,27 @@ types_name = {
 }
 
 
-def schedule_text(week_type, week_day):
+def format_timetable_text(week_type, week_day):
     lessons_finded = False
+
     result = f"<b>Расписание на:</b>\n" \
              f"<i>{days_name[week_day]}, " \
              f"{week_name[week_type][0]} - " \
              f"{week_name[week_type][1]} - " \
              f"{week_name[week_type][2]} неделя</i>"
-    for i in test_schedule_data["lessons"]:
-        if i["weekDay"] == week_day and i["weekType"] == week_type:
+
+    for lesson in test_timetable_data["lessons"]:
+        if lesson["weekDay"] == week_day and lesson["weekType"] == week_type:
             lessons_finded = True
-            result += f'\n<b>Группа:</b> {i["group"]}\n' \
-                      f'<b>Преподаватель:</b> {i["teacher"]}\n' \
-                      f'<b>Аудитория:</b> {i["classRoom"]}\n' \
-                      f'<b>Здание:</b> {i["building"]}\n' \
-                      f'<b>Предмет:</b> {i["lessonName"]}\n' \
-                      f'<b>Время начала:</b> {i["startTime"]}\n' \
-                      f'<b>Время окончания:</b> {i["endTime"]}\n' \
-                      f'<b>Номер пары:</b> {i["orderNumber"]}\n' \
-                      f'<b>Тип занятия:</b> {types_name[i["lessonType"]]}\n'
-                      # f'День недели: {i["weekDay"]}\n' \
-                      # f'Тип недели: {i["weekType"]}\n'
+            result += f'\n<b>Группа:</b> {lesson["group"]}\n' \
+                      f'<b>Преподаватель:</b> {lesson["teacher"]}\n' \
+                      f'<b>Аудитория:</b> {lesson["classRoom"]}\n' \
+                      f'<b>Здание:</b> {lesson["building"]}\n' \
+                      f'<b>Предмет:</b> {lesson["lessonName"]}\n' \
+                      f'<b>Время начала:</b> {lesson["startTime"]}\n' \
+                      f'<b>Время окончания:</b> {lesson["endTime"]}\n' \
+                      f'<b>Номер пары:</b> {lesson["orderNumber"]}\n' \
+                      f'<b>Тип занятия:</b> {types_name[lesson["lessonType"]]}\n'
 
     if not lessons_finded:
         result += f'\nВыходной'

@@ -1,4 +1,4 @@
-test_schedule_data = {
+test_timetable_data = {
   "actualWeekType": 1,
   "lessons": [
     {
