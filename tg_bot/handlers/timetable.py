@@ -1,23 +1,24 @@
 import logging
 
-from datetime import datetime
 from aiogram import Dispatcher
 from aiogram.types import Message, CallbackQuery
 from tg_bot.keyboards.inline import days_scroll
-from tg_bot.test_data.test_timetable_data import test_timetable_data
 from tg_bot.text_format.timetable_text import format_timetable_text
-
-
-class Day:
-    weekType: int = test_timetable_data["actualWeekType"]
-    weekDay: int = datetime.isoweekday(datetime.today())
-    # def __init__(self, week_type: int, week_day: int):
-    #     weekType: int = test_timetable_data["actualWeekType"]
-    #     weekDay: int = datetime.isoweekday(datetime.today())
+from tg_bot.users import users, User, Day
 
 
 async def display_timetable(message: Message):
-    await message.answer(text=format_timetable_text(Day.weekType, Day.weekDay),
+    user = message.from_user.id
+
+    if user not in users:
+        users[user] = User(Day())
+    else:
+        users[user].user_day = Day()
+
+    print(user)
+    print(users)
+    await message.answer(text=format_timetable_text(users[user].user_day.week_type,
+                                                    users[user].user_day.week_day),
                          reply_markup=days_scroll,
                          parse_mode="HTML")
 
@@ -30,18 +31,20 @@ def register_timetable(dp: Dispatcher):
 
 async def scroll_previous_day(call: CallbackQuery):
     await call.answer(cache_time=1)
-
+    user = call.from_user.id
+    print(user)
     callback_data = call.data
 
     logging.info(f"{callback_data=}")
 
-    if Day.weekDay == 1:
-        Day.weekType = 2 if Day.weekType == 1 else 1
-        Day.weekDay = 7
+    if users[user].user_day.week_day == 1:
+        users[user].user_day.week_type = 2 if users[user].user_day.week_type == 1 else 1
+        users[user].user_day.week_day = 7
     else:
-        Day.weekDay -= 1
+        users[user].user_day.week_day -= 1
 
-    await call.message.edit_text(text=format_timetable_text(Day.weekType, Day.weekDay),
+    await call.message.edit_text(text=format_timetable_text(users[user].user_day.week_type,
+                                                            users[user].user_day.week_day),
                                  parse_mode="HTML")
     await call.message.edit_reply_markup(reply_markup=days_scroll)
 
@@ -53,18 +56,20 @@ def register_previous_day(dp: Dispatcher):
 
 async def scroll_next_day(call: CallbackQuery):
     await call.answer(cache_time=1)
-
+    user = call.from_user.id
+    print(user)
     callback_data = call.data
 
     logging.info(f"{callback_data=}")
 
-    if Day.weekDay == 7:
-        Day.weekType = 2 if Day.weekType == 1 else 1
-        Day.weekDay = 1
+    if users[user].user_day.week_day == 7:
+        users[user].user_day.week_type = 2 if users[user].user_day.week_type == 1 else 1
+        users[user].user_day.week_day = 1
     else:
-        Day.weekDay += 1
+        users[user].user_day.week_day += 1
 
-    await call.message.edit_text(text=format_timetable_text(Day.weekType, Day.weekDay),
+    await call.message.edit_text(text=format_timetable_text(users[user].user_day.week_type,
+                                                            users[user].user_day.week_day),
                                  parse_mode="HTML")
     await call.message.edit_reply_markup(reply_markup=days_scroll)
 
@@ -76,13 +81,15 @@ def register_next_day(dp: Dispatcher):
 
 async def change_week(call: CallbackQuery):
     await call.answer(cache_time=1)
-
+    user = call.from_user.id
+    print(user)
     callback_data = call.data
 
     logging.info(f"{callback_data=}")
 
-    Day.weekType = 2 if Day.weekType == 1 else 1
-    await call.message.edit_text(text=format_timetable_text(Day.weekType, Day.weekDay),
+    users[user].user_day.week_type = 2 if users[user].user_day.week_type == 1 else 1
+    await call.message.edit_text(text=format_timetable_text(users[user].user_day.week_type,
+                                                            users[user].user_day.week_day),
                                  parse_mode="HTML")
     await call.message.edit_reply_markup(reply_markup=days_scroll)
 
