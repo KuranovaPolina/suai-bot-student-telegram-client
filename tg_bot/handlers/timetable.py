@@ -15,8 +15,6 @@ async def display_timetable(message: Message):
     else:
         users[user].user_day = Day()
 
-    print(user)
-    print(users)
     await message.answer(text=format_timetable_text(users[user].user_day.week_type,
                                                     users[user].user_day.week_day),
                          reply_markup=days_scroll,
@@ -32,7 +30,7 @@ def register_timetable(dp: Dispatcher):
 async def scroll_previous_day(call: CallbackQuery):
     await call.answer(cache_time=1)
     user = call.from_user.id
-    print(user)
+
     callback_data = call.data
 
     logging.info(f"{callback_data=}")
@@ -57,7 +55,7 @@ def register_previous_day(dp: Dispatcher):
 async def scroll_next_day(call: CallbackQuery):
     await call.answer(cache_time=1)
     user = call.from_user.id
-    print(user)
+
     callback_data = call.data
 
     logging.info(f"{callback_data=}")
@@ -82,7 +80,7 @@ def register_next_day(dp: Dispatcher):
 async def change_week(call: CallbackQuery):
     await call.answer(cache_time=1)
     user = call.from_user.id
-    print(user)
+
     callback_data = call.data
 
     logging.info(f"{callback_data=}")
