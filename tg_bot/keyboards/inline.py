@@ -11,3 +11,12 @@ days_scroll = InlineKeyboardMarkup(
         ]
     ]
 )
+
+teacher_scroll = InlineKeyboardMarkup(
+    inline_keyboard=[
+        [
+            InlineKeyboardButton(text="<<", callback_data="scroll_previous_teacher"),
+            InlineKeyboardButton(text=">>", callback_data="scroll_next_teacher")
+        ]
+    ]
+)
