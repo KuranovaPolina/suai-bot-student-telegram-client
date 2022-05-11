@@ -5,6 +5,7 @@ from aiogram import Bot, Dispatcher
 
 from tg_bot.config import load_config
 from tg_bot.handlers.timetable import register_full_timetable
+from tg_bot.handlers.teacher_info import register_full_teacher_info
 
 
 logger = logging.getLogger(__name__)
@@ -12,6 +13,7 @@ logger = logging.getLogger(__name__)
 
 def register_all_handlers(dp):
     register_full_timetable(dp)
+    register_full_teacher_info(dp)
 
 
 async def main():
