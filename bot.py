@@ -3,15 +3,17 @@ import logging
 
 from aiogram import Bot, Dispatcher
 
+from TimetableMessageStatesMongoClient import TimetableMessageStatesMongoClient
+from TimetableServiceHandlersRegistrator import TimetableServiceHandlersRegistrator
 from tg_bot.config import load_config
-from tg_bot.handlers.timetable import register_full_timetable
-
+from tg_bot.handlers.timetable import TimetableService
 
 logger = logging.getLogger(__name__)
 
 
-def register_all_handlers(dp):
-    register_full_timetable(dp)
+def register_all_handlers(dp: Dispatcher, registrators: []):
+    for registrator in registrators:
+        registrator.register_all(dp)
 
 
 async def main():
@@ -25,7 +27,10 @@ async def main():
     dp = Dispatcher(bot)
     bot['config'] = config
 
-    register_all_handlers(dp)
+    timetable_db_client = TimetableMessageStatesMongoClient(config.db_conn_string)
+    timetable_service = TimetableService(timetable_db_client)
+    timetable_service_registrator = TimetableServiceHandlersRegistrator(timetable_service)
+    register_all_handlers(dp, [timetable_service_registrator])
 
     try:
         await dp.start_polling()
