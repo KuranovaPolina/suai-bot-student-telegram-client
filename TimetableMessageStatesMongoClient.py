@@ -2,7 +2,6 @@ from typing import Optional
 
 from pymongo import MongoClient
 
-import TimetableMessageStateDto
 from TimetableMessageStateDto import TimetableMessageStateDto
 
 
