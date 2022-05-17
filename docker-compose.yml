@@ -1,5 +1,3 @@
-version: '3.3'
-
 services:
   bot:
     image: "${BOT_IMAGE_NAME:-tg_bot-image}"
@@ -16,6 +14,8 @@ services:
       - ".env"
     networks:
     - tg_bot
+  mongodb:
+    image:
 
 
 networks:
