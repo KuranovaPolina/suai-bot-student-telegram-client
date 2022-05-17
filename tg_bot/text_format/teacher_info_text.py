@@ -31,7 +31,7 @@ def find_all_teachers(key_string: str) -> list:
 
 
 def format_timetable_text(teacher: Teacher) -> str:
-    result: str = f'\n<i>{teacher.name}.</i> ' \
+    result: str = f'\n<i>{teacher.name}.</i>\n' \
                   f'<b>Академическая степень</b> {teacher.academic_degree}\n' \
                   f'<b>Должность</b> {teacher.position}\n' \
                   f'<b>Факультет</b> {teacher.institute}\n' \
