@@ -11,7 +11,7 @@ from tg_bot.handlers.timetable import TimetableService
 logger = logging.getLogger(__name__)
 
 
-def register_all_handlers(dp: Dispatcher, registrators: []):
+def register_all_handlers(dp: Dispatcher, registrators: list):
     for registrator in registrators:
         registrator.register_all(dp)
 
