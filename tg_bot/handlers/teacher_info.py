@@ -1,22 +1,41 @@
 import logging
 
 from aiogram import Dispatcher
+from aiogram.dispatcher import FSMContext
 from aiogram.types import Message, CallbackQuery
 from tg_bot.keyboards.inline import teacher_scroll
-# from tg_bot.text_format.teacher_info_text import
-# from tg_bot.users import users, User, Day
+from tg_bot.states.teacher_info_search_state import TeacherDialog
 
 
-async def display_teachers(message: Message):
+async def display_teachers(message: Message, state: FSMContext):
     user = message.from_user.id
+    answer = message.text
 
-    await message.answer(text="Some teacher info",
+    async with state.proxy() as data:
+        data['teacher_name'] = answer
+        # teache = data['text']
+
+    await message.answer(text=f"{data['teacher_name']}",
                          reply_markup=teacher_scroll,
                          parse_mode="HTML")
 
+    await state.finish()
 
-def register_teacher_info(dp: Dispatcher):
+
+def register_display_teachers(dp: Dispatcher):
     dp.register_message_handler(display_teachers,
+                                state=TeacherDialog.answer)
+
+
+async def ask_teacher(message: Message):
+    await message.answer(text="Введите ФИО (или часть) преподавателя",
+                         parse_mode="HTML")
+
+    await TeacherDialog.answer.set()
+
+
+def register_ask_teacher(dp: Dispatcher):
+    dp.register_message_handler(ask_teacher,
                                 commands=["teacher_info"],
                                 state="*")
 
@@ -58,6 +77,7 @@ def register_next_teacher_info(dp: Dispatcher):
 
 
 def register_full_teacher_info(dp: Dispatcher):
-    register_teacher_info(dp)
+    register_display_teachers(dp)
+    register_ask_teacher(dp)
     register_previous_teacher_info(dp)
     register_next_teacher_info(dp)

@@ -1,0 +1,1 @@
+from tg_bot.test_data.test_teacher_info_data import test_teacher_data

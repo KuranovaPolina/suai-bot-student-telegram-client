@@ -2,6 +2,7 @@ import asyncio
 import logging
 
 from aiogram import Bot, Dispatcher
+from aiogram.contrib.fsm_storage.memory import MemoryStorage
 
 from tg_bot.config import load_config
 from tg_bot.handlers.timetable import register_full_timetable
@@ -24,7 +25,7 @@ async def main():
     config = load_config(".env")
 
     bot = Bot(token=config.tg_bot.token, parse_mode="HTML")
-    dp = Dispatcher(bot)
+    dp = Dispatcher(bot, storage=MemoryStorage())
     bot['config'] = config
 
     register_all_handlers(dp)
