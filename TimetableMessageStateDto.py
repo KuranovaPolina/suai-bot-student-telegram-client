@@ -9,7 +9,7 @@ class TimetableMessageStateDto:
         self.week_type = week_type
         self.group = group
 
-    def __dict__(self):
+    def to_dict(self):
         return \
             {
                 "user_id": self.user_id,

@@ -37,4 +37,4 @@ class TimetableMessageStatesMongoClient:
             return None
 
     def add_state(self, state: TimetableMessageStateDto):
-        self.states.insert_one(state.__dict__())
+        self.states.insert_one(state.to_dict())
