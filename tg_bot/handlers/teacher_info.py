@@ -5,19 +5,42 @@ from aiogram.dispatcher import FSMContext
 from aiogram.types import Message, CallbackQuery
 from tg_bot.keyboards.inline import teacher_scroll
 from tg_bot.states.teacher_info_search_state import TeacherDialog
+from tg_bot.text_format.teacher_info_text import find_all_teachers, \
+    format_timetable_text
+from tg_bot.users import users, User
 
 
 async def display_teachers(message: Message, state: FSMContext):
     answer = message.text
+    user = message.from_user.id
+
+    if user not in users:
+        users[user] = User(teacher_name=answer,
+                           teachers=find_all_teachers(answer))
+    else:
+        users[user].teacher_name = answer
+        users[user].teachers = find_all_teachers(answer)
+        users[user].teacher_number = 0
 
     async with state.proxy() as data:
         data['teacher_name'] = answer
 
-    await message.answer(text=f"{data['teacher_name']}",
-                         reply_markup=teacher_scroll,
-                         parse_mode="HTML")
-
     await state.finish()
+
+    if not users[user].teachers:
+        await message.answer(text=f"Преподаватель не найден",
+                             parse_mode="HTML")
+
+    elif len(users[user].teachers) == 1:
+        teacher_id = users[user].teacher_number
+        await message.answer(text=format_timetable_text(users[user].teachers[teacher_id]),
+                             parse_mode="HTML")
+
+    else:
+        teacher_id = users[user].teacher_number
+        await message.answer(text=format_timetable_text(users[user].teachers[teacher_id]),
+                             reply_markup=teacher_scroll,
+                             parse_mode="HTML")
 
 
 def register_display_teachers(dp: Dispatcher):
