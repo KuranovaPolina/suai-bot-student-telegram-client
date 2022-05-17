@@ -35,8 +35,12 @@ def format_timetable_text(teacher: Teacher) -> str:
                   f'<b>Академическая степень</b> {teacher.academic_degree}\n' \
                   f'<b>Должность</b> {teacher.position}\n' \
                   f'<b>Факультет</b> {teacher.institute}\n' \
-                  f'<b>Кафедра</b> {teacher.department}\n' \
-                  f'<b>Номер</b> {teacher.phone}\n' \
-                  f'<b>Почта</b> {teacher.email}\n'
+                  f'<b>Кафедра</b> {teacher.department}\n'
+
+    if teacher.phone != "":
+        result += f'<b>Номер</b> {teacher.phone}\n'
+
+    if teacher.email != "":
+        result += f'<b>Почта</b> {teacher.email}\n'
 
     return result
