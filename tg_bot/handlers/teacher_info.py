@@ -32,13 +32,13 @@ async def display_teachers(message: Message, state: FSMContext):
                              parse_mode="HTML")
 
     elif len(users[user].teachers) == 1:
-        teacher_id = users[user].teacher_number
-        await message.answer(text=format_timetable_text(users[user].teachers[teacher_id]),
+        teacher_number = users[user].teacher_number
+        await message.answer(text=format_timetable_text(users[user].teachers[teacher_number]),
                              parse_mode="HTML")
 
     else:
-        teacher_id = users[user].teacher_number
-        await message.answer(text=format_timetable_text(users[user].teachers[teacher_id]),
+        teacher_number = users[user].teacher_number
+        await message.answer(text=format_timetable_text(users[user].teachers[teacher_number]),
                              reply_markup=teacher_scroll,
                              parse_mode="HTML")
 
@@ -63,12 +63,19 @@ def register_ask_teacher(dp: Dispatcher):
 
 async def scroll_previous_teacher_info(call: CallbackQuery):
     await call.answer(cache_time=1)
+    user = call.from_user.id
 
     callback_data = call.data
 
     logging.info(f"{callback_data=}")
 
-    await call.message.edit_text(text="Some previous teacher info",
+    if users[user].teacher_number == 0:
+        users[user].teacher_number = len(users[user].teachers) - 1
+    else:
+        users[user].teacher_number -= 1
+
+    teacher_number = users[user].teacher_number
+    await call.message.edit_text(text=format_timetable_text(users[user].teachers[teacher_number]),
                                  parse_mode="HTML")
     await call.message.edit_reply_markup(reply_markup=teacher_scroll)
 
