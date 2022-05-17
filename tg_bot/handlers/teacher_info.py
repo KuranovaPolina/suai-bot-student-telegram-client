@@ -87,12 +87,19 @@ def register_previous_teacher_info(dp: Dispatcher):
 
 async def scroll_next_teacher_info(call: CallbackQuery):
     await call.answer(cache_time=1)
+    user = call.from_user.id
 
     callback_data = call.data
 
     logging.info(f"{callback_data=}")
 
-    await call.message.edit_text(text="Some next teacher info",
+    if users[user].teacher_number == len(users[user].teachers) - 1:
+        users[user].teacher_number = 0
+    else:
+        users[user].teacher_number += 1
+
+    teacher_number = users[user].teacher_number
+    await call.message.edit_text(text=format_timetable_text(users[user].teachers[teacher_number]),
                                  parse_mode="HTML")
     await call.message.edit_reply_markup(reply_markup=teacher_scroll)
 
