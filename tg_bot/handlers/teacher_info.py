@@ -8,12 +8,10 @@ from tg_bot.states.teacher_info_search_state import TeacherDialog
 
 
 async def display_teachers(message: Message, state: FSMContext):
-    user = message.from_user.id
     answer = message.text
 
     async with state.proxy() as data:
         data['teacher_name'] = answer
-        # teache = data['text']
 
     await message.answer(text=f"{data['teacher_name']}",
                          reply_markup=teacher_scroll,
@@ -42,7 +40,6 @@ def register_ask_teacher(dp: Dispatcher):
 
 async def scroll_previous_teacher_info(call: CallbackQuery):
     await call.answer(cache_time=1)
-    user = call.from_user.id
 
     callback_data = call.data
 
@@ -60,7 +57,6 @@ def register_previous_teacher_info(dp: Dispatcher):
 
 async def scroll_next_teacher_info(call: CallbackQuery):
     await call.answer(cache_time=1)
-    user = call.from_user.id
 
     callback_data = call.data
 
