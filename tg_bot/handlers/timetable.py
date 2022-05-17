@@ -33,7 +33,6 @@ class TimetableService:
                                    parse_mode="HTML")
         state.message_id = msg.message_id
         self.db.add_state(state)
-        print(msg.message_id)
 
     async def scroll_previous_day(self, call: CallbackQuery):
         await call.answer(cache_time=1)
