@@ -8,6 +8,7 @@ from TimetableMessageStatesMongoClient import TimetableMessageStatesMongoClient
 from TimetableServiceHandlersRegistrator import TimetableServiceHandlersRegistrator
 from tg_bot.config import load_config
 from tg_bot.handlers.timetable import TimetableService
+from tg_bot.handlers.questions_box import register_full_questions_box
 
 logger = logging.getLogger(__name__)
 
@@ -15,6 +16,8 @@ logger = logging.getLogger(__name__)
 def register_all_handlers(dp: Dispatcher, registrators: list):
     for registrator in registrators:
         registrator.register_all(dp)
+
+    register_full_questions_box(dp)
 
 
 async def main():
