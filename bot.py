@@ -2,6 +2,7 @@ import asyncio
 import logging
 
 from aiogram import Bot, Dispatcher
+from aiogram.contrib.fsm_storage.memory import MemoryStorage
 
 from TimetableMessageStatesMongoClient import TimetableMessageStatesMongoClient
 from TimetableServiceHandlersRegistrator import TimetableServiceHandlersRegistrator
@@ -24,7 +25,7 @@ async def main():
     config = load_config(".env")
 
     bot = Bot(token=config.tg_bot.token, parse_mode="HTML")
-    dp = Dispatcher(bot)
+    dp = Dispatcher(bot, storage=MemoryStorage())
     bot['config'] = config
 
     timetable_db_client = TimetableMessageStatesMongoClient(config.db_conn_string)
