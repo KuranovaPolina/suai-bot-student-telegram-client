@@ -22,9 +22,6 @@ async def display_teachers(message: Message, state: FSMContext):
         users[user].teachers = find_all_teachers(answer)
         users[user].teacher_number = 0
 
-    async with state.proxy() as data:
-        data['teacher_name'] = answer
-
     await state.finish()
 
     if not users[user].teachers:
