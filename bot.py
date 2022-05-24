@@ -4,17 +4,20 @@ import logging
 from aiogram import Bot, Dispatcher
 from aiogram.contrib.fsm_storage.memory import MemoryStorage
 
+from TeacherInfoServiceHandlersRegistrar import TeacherInfoServiceHandlersRegistrar
 from tg_bot.config import load_config
 from tg_bot.handlers.timetable import register_full_timetable
-from tg_bot.handlers.teacher_info import register_full_teacher_info
+from tg_bot.handlers.teacher_info import TeacherInfo
 
 
 logger = logging.getLogger(__name__)
 
 
-def register_all_handlers(dp):
+def register_all_handlers(dp, registrars: list):
     register_full_timetable(dp)
-    register_full_teacher_info(dp)
+
+    for registrar in registrars:
+        registrar.register_all(dp)
 
 
 async def main():
@@ -28,7 +31,9 @@ async def main():
     dp = Dispatcher(bot, storage=MemoryStorage())
     bot['config'] = config
 
-    register_all_handlers(dp)
+    teacher_info_service = TeacherInfo()
+    teacher_info_service_registrar = TeacherInfoServiceHandlersRegistrar(teacher_info_service)
+    register_all_handlers(dp, [teacher_info_service_registrar])
 
     try:
         await dp.start_polling()
