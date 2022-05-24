@@ -1,11 +1,11 @@
 from aiogram import Dispatcher
 
-from tg_bot.handlers.teacher_info import TeacherInfo
+from tg_bot.handlers.teacher_info import TeacherInfoService
 from tg_bot.dialog_states.teacher_info_search_state import TeacherDialog
 
 
 class TeacherInfoServiceHandlersRegistrar:
-    def __init__(self, teacher_info_service: TeacherInfo):
+    def __init__(self, teacher_info_service: TeacherInfoService):
         self.service = teacher_info_service
 
     def register_display_teachers(self, dp: Dispatcher):

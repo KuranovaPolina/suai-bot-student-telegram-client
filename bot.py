@@ -7,7 +7,7 @@ from aiogram.contrib.fsm_storage.memory import MemoryStorage
 from service_handlers_registrars.teacher_info_service_handlers_registrar import TeacherInfoServiceHandlersRegistrar
 from tg_bot.config import load_config
 from tg_bot.handlers.timetable import register_full_timetable
-from tg_bot.handlers.teacher_info import TeacherInfo
+from tg_bot.handlers.teacher_info import TeacherInfoService
 
 
 logger = logging.getLogger(__name__)
@@ -31,7 +31,7 @@ async def main():
     dp = Dispatcher(bot, storage=MemoryStorage())
     bot['config'] = config
 
-    teacher_info_service = TeacherInfo()
+    teacher_info_service = TeacherInfoService()
     teacher_info_service_registrar = TeacherInfoServiceHandlersRegistrar(teacher_info_service)
     register_all_handlers(dp, [teacher_info_service_registrar])
 

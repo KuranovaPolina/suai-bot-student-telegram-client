@@ -9,7 +9,7 @@ from tg_bot.text_format.teacher_info_text import find_all_teachers, \
 from tg_bot.users import users, User
 
 
-class TeacherInfo:
+class TeacherInfoService:
     def __init__(self):
         pass
 
