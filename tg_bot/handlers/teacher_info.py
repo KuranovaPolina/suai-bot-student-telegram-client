@@ -45,15 +45,15 @@ def register_display_teachers(dp: Dispatcher):
                                 state=TeacherDialog.answer)
 
 
-async def ask_teacher(message: Message):
+async def request_teacher_name(message: Message):
     await message.answer(text="Введите ФИО (или часть) преподавателя",
                          parse_mode="HTML")
 
     await TeacherDialog.answer.set()
 
 
-def register_ask_teacher(dp: Dispatcher):
-    dp.register_message_handler(ask_teacher,
+def register_request_teacher_name(dp: Dispatcher):
+    dp.register_message_handler(request_teacher_name,
                                 commands=["teacher_info"],
                                 state="*")
 
@@ -108,6 +108,6 @@ def register_next_teacher_info(dp: Dispatcher):
 
 def register_full_teacher_info(dp: Dispatcher):
     register_display_teachers(dp)
-    register_ask_teacher(dp)
+    register_request_teacher_name(dp)
     register_previous_teacher_info(dp)
     register_next_teacher_info(dp)
