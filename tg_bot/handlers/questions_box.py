@@ -7,39 +7,26 @@ from tg_bot.dialog_states.questions_box_states import QuestionsBoxDialog
 from tg_bot.users import User, users
 
 
-async def save_questions(message: Message, state: FSMContext):
-    answer = message.text
-    user = message.from_user.id
+class QuestionsBoxService:
+    def __init__(self):
+        pass
 
-    if user not in users:
-        users[user] = User(user_questions=[answer])
+    async def save_questions(self, message: Message, state: FSMContext):
+        answer = message.text
+        user = message.from_user.id
 
-    else:
-        users[user].user_questions.append(answer)
+        if user not in users:
+            users[user] = User(user_questions=[answer])
 
-    await state.finish()
+        else:
+            users[user].user_questions.append(answer)
 
-    await message.answer(text=f"Answer saved {users[user].user_questions}",
-                         parse_mode="HTML")
+        await state.finish()
 
+        await message.answer(text=f"Answer saved {users[user].user_questions}",
+                             parse_mode="HTML")
 
-def register_save_questions(dp: Dispatcher):
-    dp.register_message_handler(save_questions,
-                                state=QuestionsBoxDialog.question)
+    async def request_question(self, message: Message):
+        await message.answer(text="Задайте вопрос", parse_mode="HTML")
 
-
-async def request_question(message: Message):
-    await message.answer(text="Задайте вопрос", parse_mode="HTML")
-
-    await QuestionsBoxDialog.question.set()
-
-
-def register_request_question(dp: Dispatcher):
-    dp.register_message_handler(request_question,
-                                commands=["ask_question"],
-                                state="*")
-
-
-def register_full_questions_box(dp: Dispatcher):
-    register_save_questions(dp)
-    register_request_question(dp)
+        await QuestionsBoxDialog.question.set()
