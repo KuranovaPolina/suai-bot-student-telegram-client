@@ -4,7 +4,7 @@ import logging
 from aiogram import Bot, Dispatcher
 from aiogram.contrib.fsm_storage.memory import MemoryStorage
 
-from TeacherInfoServiceHandlersRegistrar import TeacherInfoServiceHandlersRegistrar
+from service_handlers_registrars.teacher_info_service_handlers_registrar import TeacherInfoServiceHandlersRegistrar
 from tg_bot.config import load_config
 from tg_bot.handlers.timetable import register_full_timetable
 from tg_bot.handlers.teacher_info import TeacherInfo
