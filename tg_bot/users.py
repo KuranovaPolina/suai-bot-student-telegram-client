@@ -10,8 +10,9 @@ class Day:
 
 
 class User:
-    def __init__(self, user_day: Day):
+    def __init__(self, user_day: Day = Day(), user_questions: list = []):
         self.user_day: Day = user_day
+        self.user_questions: list = user_questions
 
 
 users = {}
