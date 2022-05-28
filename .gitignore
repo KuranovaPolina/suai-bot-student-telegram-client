@@ -135,3 +135,5 @@ tg_bot/filters/admin.py
 
 /tg_bot/keyboards/reply.py
 /tg_bot/middlewares/
+
+.idea
