@@ -10,7 +10,7 @@ from service_handlers_registrars.teacher_info_service_handlers_registrar import 
 from tg_bot.handlers.teacher_info import TeacherInfoService
 
 from TimetableMessageStatesMongoClient import TimetableMessageStatesMongoClient
-from TimetableServiceHandlersRegistrator import TimetableServiceHandlersRegistrator
+from service_handlers_registrars.timetable_service_handlers_registrar import TimetableServiceHandlersRegistrator
 from tg_bot.handlers.timetable import TimetableService
 
 
