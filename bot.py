@@ -9,8 +9,8 @@ from tg_bot.config import load_config
 from service_handlers_registrars.teacher_info_service_handlers_registrar import TeacherInfoServiceHandlersRegistrar
 from tg_bot.handlers.teacher_info import TeacherInfoService
 
-from TimetableMessageStatesMongoClient import TimetableMessageStatesMongoClient
-from service_handlers_registrars.timetable_service_handlers_registrar import TimetableServiceHandlersRegistrator
+from timetable_message_states_mongo_client import TimetableMessageStatesMongoClient
+from service_handlers_registrars.timetable_service_handlers_registrar import TimetableServiceHandlersRegistrar
 from tg_bot.handlers.timetable import TimetableService
 
 
@@ -36,7 +36,7 @@ async def main():
 
     timetable_db_client = TimetableMessageStatesMongoClient(config.db_conn_string)
     timetable_service = TimetableService(timetable_db_client)
-    timetable_service_registrator = TimetableServiceHandlersRegistrator(timetable_service)
+    timetable_service_registrator = TimetableServiceHandlersRegistrar(timetable_service)
     
     teacher_info_service = TeacherInfoService()
     teacher_info_service_registrar = TeacherInfoServiceHandlersRegistrar(teacher_info_service)
