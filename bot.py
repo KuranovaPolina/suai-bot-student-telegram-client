@@ -13,6 +13,9 @@ from timetable_message_states_mongo_client import TimetableMessageStatesMongoCli
 from service_handlers_registrars.timetable_service_handlers_registrar import TimetableServiceHandlersRegistrar
 from tg_bot.handlers.timetable import TimetableService
 
+from service_handlers_registrars.questions_box_service_handlers_registrar import QuestionsBoxServiceHandlersRegistrar
+from tg_bot.handlers.questions_box import QuestionsBoxService
+
 
 logger = logging.getLogger(__name__)
 
@@ -33,17 +36,20 @@ async def main():
     dp = Dispatcher(bot, storage=MemoryStorage())
     bot['config'] = config
 
-
     timetable_db_client = TimetableMessageStatesMongoClient(config.db_conn_string)
     timetable_service = TimetableService(timetable_db_client)
-    timetable_service_registrator = TimetableServiceHandlersRegistrar(timetable_service)
-    
+    timetable_service_registrar = TimetableServiceHandlersRegistrar(timetable_service)
+
     teacher_info_service = TeacherInfoService()
     teacher_info_service_registrar = TeacherInfoServiceHandlersRegistrar(teacher_info_service)
-    
-    register_all_handlers(dp, [timetable_service_registrator,
-                              teacher_info_service_registrar])
-    
+
+    questions_box_service = QuestionsBoxService()
+    questions_box_service_registrar = QuestionsBoxServiceHandlersRegistrar(questions_box_service)
+
+    register_all_handlers(dp, [timetable_service_registrar,
+                               teacher_info_service_registrar,
+                               questions_box_service_registrar])
+
     try:
         await dp.start_polling()
     finally:
