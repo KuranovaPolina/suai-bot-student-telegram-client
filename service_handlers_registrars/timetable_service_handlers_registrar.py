@@ -3,7 +3,7 @@ from aiogram import Dispatcher
 from tg_bot.handlers.timetable import TimetableService
 
 
-class TimetableServiceHandlersRegistrator:
+class TimetableServiceHandlersRegistrar:
     def __init__(self, timetable_service: TimetableService):
         self.service = timetable_service
 

@@ -2,8 +2,8 @@ import logging
 
 from aiogram.types import Message, CallbackQuery
 
-import TimetableMessageStateDto
-from TimetableMessageStatesMongoClient import TimetableMessageStatesMongoClient
+import timetable_message_state_dto
+from timetable_message_states_mongo_client import TimetableMessageStatesMongoClient
 from tg_bot.keyboards.inline import days_scroll
 from tg_bot.text_format.timetable_text import format_timetable_text
 from tg_bot.users import users, User, Day
@@ -17,7 +17,7 @@ class TimetableService:
         user = message.from_user.id
 
         day = Day()
-        state = TimetableMessageStateDto.TimetableMessageStateDto(
+        state = timetable_message_state_dto.TimetableMessageStateDto(
             dialog_id=message.chat.id,
             day=day.week_day,
             week_type=day.week_type,
