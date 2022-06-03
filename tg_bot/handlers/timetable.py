@@ -1,20 +1,25 @@
 import logging
 
 from aiogram.types import Message, CallbackQuery
+from aiogram.dispatcher import FSMContext
 
 import timetable_message_state_dto
 from timetable_message_states_mongo_client import TimetableMessageStatesMongoClient
 from tg_bot.keyboards.inline import days_scroll
 from tg_bot.text_format.timetable_text import format_timetable_text
-from tg_bot.users import users, User, Day
+from tg_bot.dialog_states.timetable_states import TimetableDialog
+from tg_bot.users import Day
 
 
 class TimetableService:
     def __init__(self, db_client: TimetableMessageStatesMongoClient):
         self.db = db_client
 
-    async def display_timetable(self, message: Message):
+    async def display_timetable(self, message: Message, state: FSMContext):
         user = message.from_user.id
+        group = message.text
+
+        await state.finish()
 
         day = Day()
         state = timetable_message_state_dto.TimetableMessageStateDto(
@@ -24,15 +29,21 @@ class TimetableService:
             user_id=user,
             timestamp=message.date.timestamp(),
             message_id=message.message_id,
-            group='test'
+            group=group
         )
 
-        msg = await message.answer(text=format_timetable_text(state.week_type,
-                                                              state.day),
+        msg = await message.answer(text=state.group,
                                    reply_markup=days_scroll,
                                    parse_mode="HTML")
+
         state.message_id = msg.message_id
         self.db.add_state(state)
+
+    async def request_group_number(self, message: Message):
+        await message.answer(text="Введите номер группы",
+                             parse_mode="HTML")
+
+        await TimetableDialog.group_number.set()
 
     async def scroll_previous_day(self, call: CallbackQuery):
         await call.answer(cache_time=1)

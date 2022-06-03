@@ -1,6 +1,7 @@
 from aiogram import Dispatcher
 
 from tg_bot.handlers.timetable import TimetableService
+from tg_bot.dialog_states.timetable_states import TimetableDialog
 
 
 class TimetableServiceHandlersRegistrar:
@@ -9,6 +10,10 @@ class TimetableServiceHandlersRegistrar:
 
     def register_timetable(self, dp: Dispatcher):
         dp.register_message_handler(self.service.display_timetable,
+                                    state=TimetableDialog.group_number)
+
+    def registrar_request_group_number(self, dp: Dispatcher):
+        dp.register_message_handler(self.service.request_group_number,
                                     commands=["timetable"],
                                     state="*")
 
@@ -26,6 +31,7 @@ class TimetableServiceHandlersRegistrar:
 
     def register_all(self, dp: Dispatcher):
         self.register_timetable(dp)
+        self.registrar_request_group_number(dp)
         self.register_previous_day(dp)
         self.register_next_day(dp)
         self.register_change_week(dp)
