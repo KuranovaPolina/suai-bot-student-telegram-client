@@ -14,6 +14,21 @@ class Teacher:
         self.phone: str = phone
         self.email: str = email
 
+    def format_teacher_info_text(self) -> str:
+        result: str = f'\n<i>{self.name}.</i>\n' \
+                      f'<b>Академическая степень</b> {self.academic_degree}\n' \
+                      f'<b>Должность</b> {self.position}\n' \
+                      f'<b>Факультет</b> {self.institute}\n' \
+                      f'<b>Кафедра</b> {self.department}\n'
+
+        if self.phone != "":
+            result += f'<b>Номер</b> {self.phone}\n'
+
+        if self.email != "":
+            result += f'<b>Почта</b> {self.email}\n'
+
+        return result
+
 
 def find_all_teachers(key_string: str) -> list:
     teachers = []
@@ -28,19 +43,3 @@ def find_all_teachers(key_string: str) -> list:
                                     teacher["email"]))
 
     return teachers
-
-
-def format_teacher_info_text(teacher: Teacher) -> str:
-    result: str = f'\n<i>{teacher.name}.</i>\n' \
-                  f'<b>Академическая степень</b> {teacher.academic_degree}\n' \
-                  f'<b>Должность</b> {teacher.position}\n' \
-                  f'<b>Факультет</b> {teacher.institute}\n' \
-                  f'<b>Кафедра</b> {teacher.department}\n'
-
-    if teacher.phone != "":
-        result += f'<b>Номер</b> {teacher.phone}\n'
-
-    if teacher.email != "":
-        result += f'<b>Почта</b> {teacher.email}\n'
-
-    return result

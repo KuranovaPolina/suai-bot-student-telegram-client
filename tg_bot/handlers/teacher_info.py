@@ -4,8 +4,7 @@ from aiogram.dispatcher import FSMContext
 from aiogram.types import Message, CallbackQuery
 from tg_bot.keyboards.inline import teacher_scroll
 from tg_bot.dialog_states.teacher_info_search_states import TeacherDialog
-from tg_bot.text_format.teacher_info_text import find_all_teachers, \
-    format_teacher_info_text
+from tg_bot.text_format.teacher_info_text import find_all_teachers
 from tg_bot.users import users, User
 
 
@@ -33,12 +32,12 @@ class TeacherInfoService:
 
         elif len(users[user].teachers) == 1:
             teacher_number = users[user].teacher_number
-            await message.answer(text=format_teacher_info_text(users[user].teachers[teacher_number]),
+            await message.answer(text=users[user].teachers[teacher_number].format_teacher_info_text(),
                                  parse_mode="HTML")
 
         else:
             teacher_number = users[user].teacher_number
-            await message.answer(text=format_teacher_info_text(users[user].teachers[teacher_number]),
+            await message.answer(text=users[user].teachers[teacher_number].format_teacher_info_text(),
                                  reply_markup=teacher_scroll,
                                  parse_mode="HTML")
 
@@ -62,7 +61,7 @@ class TeacherInfoService:
             users[user].teacher_number -= 1
 
         teacher_number = users[user].teacher_number
-        await call.message.edit_text(text=format_teacher_info_text(users[user].teachers[teacher_number]),
+        await call.message.edit_text(text=users[user].teachers[teacher_number].format_teacher_info_text(),
                                      parse_mode="HTML")
         await call.message.edit_reply_markup(reply_markup=teacher_scroll)
 
@@ -80,7 +79,7 @@ class TeacherInfoService:
             users[user].teacher_number += 1
 
         teacher_number = users[user].teacher_number
-        await call.message.edit_text(text=format_teacher_info_text(users[user].teachers[teacher_number]),
+        await call.message.edit_text(text=users[user].teachers[teacher_number].format_teacher_info_text(),
                                      parse_mode="HTML")
         await call.message.edit_reply_markup(reply_markup=teacher_scroll)
 
