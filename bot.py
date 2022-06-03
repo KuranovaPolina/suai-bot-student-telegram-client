@@ -16,6 +16,8 @@ from tg_bot.handlers.timetable import TimetableService
 from service_handlers_registrars.questions_box_service_handlers_registrar import QuestionsBoxServiceHandlersRegistrar
 from tg_bot.handlers.questions_box import QuestionsBoxService
 
+from service_handlers_registrars.start_registrar import register_start
+
 
 logger = logging.getLogger(__name__)
 
@@ -23,6 +25,8 @@ logger = logging.getLogger(__name__)
 def register_all_handlers(dp: Dispatcher, registrars: list):
     for registrar in registrars:
         registrar.register_all(dp)
+
+    register_start(dp)
 
 
 async def main():
