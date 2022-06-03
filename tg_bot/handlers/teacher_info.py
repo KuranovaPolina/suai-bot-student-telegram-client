@@ -3,7 +3,7 @@ import logging
 from aiogram.dispatcher import FSMContext
 from aiogram.types import Message, CallbackQuery
 from tg_bot.keyboards.inline import teacher_scroll
-from tg_bot.dialog_states.teacher_info_search_state import TeacherDialog
+from tg_bot.dialog_states.teacher_info_search_states import TeacherDialog
 from tg_bot.text_format.teacher_info_text import find_all_teachers, \
     format_timetable_text
 from tg_bot.users import users, User

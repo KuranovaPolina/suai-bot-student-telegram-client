@@ -1,7 +1,7 @@
 from aiogram import Dispatcher
 
 from tg_bot.handlers.teacher_info import TeacherInfoService
-from tg_bot.dialog_states.teacher_info_search_state import TeacherDialog
+from tg_bot.dialog_states.teacher_info_search_states import TeacherDialog
 
 
 class TeacherInfoServiceHandlersRegistrar:
