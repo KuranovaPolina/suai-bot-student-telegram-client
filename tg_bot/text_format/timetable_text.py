@@ -1,6 +1,7 @@
-from tg_bot.test_data.test_timetable_data import test_timetable_data
+from official_data.official_timetable_data import get_official_teacher_info_data
 
 days_name = {
+    0: "Вне сетки расписания",
     1: "Понедельник",
     2: "Вторник",
     3: "Среда",
@@ -10,9 +11,20 @@ days_name = {
     7: "Воскресенье"
 }
 
+days_number = {
+    "Вне сетки расписания": 0,
+    "Понедельник": 1,
+    "Вторник": 2,
+    "Среда": 3,
+    "Четверг": 4,
+    "Пятница": 5,
+    "Суббота": 6,
+    "Воскресенье": 7
+}
+
 week_name = {
-    1: ("нечётная", "⬆️", "🔴"),
-    2: ("чётная", "⬇️", "🔵")
+    "верхняя": ("нечётная", "⬆️", "🔴"),
+    "нижняя": ("чётная", "⬇️", "🔵")
 }
 
 types_name = {
@@ -24,8 +36,28 @@ types_name = {
 }
 
 
-def format_timetable_text(week_type: int, week_day: int) -> str:
-    lessons_found: bool = False
+class Lesson:
+    def __init__(self, groups: list, teachers: list,
+                 building: str, class_rooms: list,
+                 week_day: int, week_types: list,
+                 lesson_type: str, name: str,
+                 start_time: str, end_time: str,
+                 order: str):
+        self.groups: list = groups
+        self.teachers: list = teachers
+        self.building: str = building
+        self.class_rooms: list = class_rooms
+        self.week_day: int = week_day
+        self.week_types: list = week_types
+        self.lesson_type: str = lesson_type
+        self.name: str = name
+        self.start_time: str = start_time
+        self.end_time: str = end_time
+        self.order: str = order
+
+
+def format_timetable_text(week_type: str, week_day: int, lessons: list) -> str:
+    day_lessons = find_all_day_lessons(week_type, week_day, lessons)
 
     result: str = f"<b>Расписание на:</b>\n" \
                   f"<i>{days_name[week_day]}, " \
@@ -33,17 +65,50 @@ def format_timetable_text(week_type: int, week_day: int) -> str:
                   f"{week_name[week_type][1]} " \
                   f"{week_name[week_type][0]} неделя</i>\n"
 
-    for lesson in test_timetable_data["lessons"]:
-        if lesson["weekDay"] == week_day and lesson["weekType"] == week_type:
-            lessons_found = True
-            result += f'\n<b>{lesson["orderNumber"]}.</b> {lesson["startTime"]} - {lesson["endTime"]}\n' \
-                      f'<b>Предмет:</b> {lesson["lessonName"]}, {types_name[lesson["lessonType"]]}\n' \
-                      f'<b>Преподаватель:</b> {lesson["teacher"]}\n' \
-                      f'<b>Аудитория:</b> {lesson["classRoom"]}\n' \
-                      f'<b>Корпус:</b> {lesson["building"]}\n' \
-                      f'<b>Группы:</b> {lesson["group"]}\n'
-
-    if not lessons_found:
+    if not day_lessons:
         result += f'\nВыходной'
 
+    for lesson in day_lessons:
+        result += f'\n<b>{lesson.order}.</b> {lesson.start_time} - {lesson.end_time}\n' \
+                  f'<b>Предмет:</b> {lesson.name}, {lesson.lesson_type}\n' \
+                  f'<b>Преподаватели:</b> {[]}\n' \
+                  f'<b>Аудитории:</b> {[]}\n' \
+                  f'<b>Корпус:</b> {lesson.building}\n' \
+                  f'<b>Группы:</b> {[]}\n'
+
     return result
+
+
+def create_elements_list(lesson: dict, key: str) -> list:
+    elements = []
+    for element in lesson[key]:
+        if element != "":
+            elements.append(element)
+
+    return elements
+
+
+def find_all_lessons(key_string: str) -> tuple:
+    lessons = []
+
+    data = get_official_teacher_info_data(key_string)
+
+    for lesson in data["Lessons"]:
+        lessons.append(Lesson(create_elements_list(lesson, "Groups"), create_elements_list(lesson, "Teachers"),
+                              lesson["Building"], create_elements_list(lesson, "ClassRooms"),
+                              days_number[lesson["WeekDay"]], create_elements_list(lesson, "WeekTypes"),
+                              lesson["Type"], lesson["Name"],
+                              lesson["StartTime"], lesson["EndTime"],
+                              lesson["OrderNumber"]))
+
+    return data["ActualWeekType"], lessons
+
+
+def find_all_day_lessons(week_type: str, week_day: int, lessons: list) -> list:
+    day_lessons = []
+
+    for lesson in lessons:
+        if week_type in lesson.week_types and (week_day == lesson.week_day):
+            day_lessons.append(lesson)
+
+    return day_lessons

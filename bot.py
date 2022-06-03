@@ -26,7 +26,7 @@ def register_all_handlers(dp: Dispatcher, registrars: list):
     for registrar in registrars:
         registrar.register_all(dp)
 
-    register_start(dp)
+    # register_start(dp)
 
 
 async def main():
@@ -64,3 +64,4 @@ if __name__ == '__main__':
         asyncio.run(main())
     except (KeyboardInterrupt, SystemExit):
         logger.error("Bot stopped!")
+
