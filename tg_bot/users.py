@@ -13,12 +13,14 @@ class User:
     def __init__(self, user_day: Day = Day(),
                  teacher_name: str = "", teachers: list = [],
                  teacher_number: int = 0,
-                 user_questions: list = []):
+                 user_questions: list = [],
+                 user_group_number: int = 0):
         self.user_day: Day = user_day
         self.teacher_name: str = teacher_name
         self.teachers: list = teachers
         self.teacher_number = teacher_number
         self.user_questions: list = user_questions
+        self.user_group_number: int = user_group_number
 
 
 users = {}
