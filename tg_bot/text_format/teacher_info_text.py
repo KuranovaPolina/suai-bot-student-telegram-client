@@ -8,9 +8,18 @@ class Position:
         self.position: str = position
 
     def format_position_text(self) -> str:
-        return f'\n\t<i>Факультет:</i> {self.institute}\n' \
-               f'\t<i>Кафедра:</i> {self.department}\n' \
-               f'\t<i>Должность:</i> {self.position}\n'
+        result: str = ""
+
+        if self.institute != "":
+            result += f'\n\t<i>Факультет</i>: {self.institute}\n'
+
+        if self.department != "":
+            result += f'\t<i>Кафедра</i>: {self.department}\n'
+
+        if self.position != "":
+            result += f'\t<i>Должность</i>: {self.position}\n'
+
+        return result
 
 
 class Teacher:
@@ -47,11 +56,19 @@ class Teacher:
 
     def format_teacher_info_text(self) -> str:
 
-        result: str = f'\n<i>{self.first_name} {self.second_name} {self.last_name}.</i>\n' \
-                      f'<b>Должности</b>:{self.connect_all_positions()}\n' \
-                      f'<b>Степень преподавателя</b>: {self.teacher_degree}\n' \
-                      f'<b>Академические степени</b>:{self.connect_all_academic_degrees()}\n' \
-                      f'<b>Аудитория</b>: {self.class_room}\n'
+        result: str = f'\n<i>{self.first_name} {self.second_name} {self.last_name}.</i>\n'
+
+        if self.positions:
+            result += f'<b>Должности</b>: {self.connect_all_positions()}\n'
+
+        if self.teacher_degree != "":
+            result += f'<b>Степень преподавателя</b>: {self.teacher_degree}\n'
+
+        if self.academic_degrees:
+            result += f'<b>Академические степени</b>: {self.connect_all_academic_degrees()}\n'
+
+        if self.class_room != "":
+            result += f'<b>Аудитория</b>: {self.class_room}\n'
 
         if self.phone != "":
             result += f'<b>Номер</b>: {self.phone}\n'
@@ -75,7 +92,8 @@ def create_positions(teacher: dict) -> list:
 def create_academic_degrees(teacher: dict) -> list:
     academic_degrees = []
     for academic_degree in teacher["AcademicDegrees"]:
-        academic_degrees.append(academic_degree)
+        if academic_degree != "":
+            academic_degrees.append(academic_degree)
 
     return academic_degrees
 
@@ -84,7 +102,6 @@ def find_all_teachers(key_string: str) -> list:
     teachers = []
 
     for teacher in get_official_teacher_info_data(key_string)["Teachers"]:
-
         teachers.append(Teacher(teacher["FirstName"], teacher["SecondName"], teacher["LastName"],
                                 create_positions(teacher),
                                 teacher["Phone"], teacher["Email"],
