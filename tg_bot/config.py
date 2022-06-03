@@ -16,11 +16,10 @@ class Config:
 
 def load_config(path: str = None):
     env = Env()
-    env.read_env(path)
 
     return Config(
         tg_bot=TgBot(
             token=env.str("BOT_TOKEN"),
         ),
-        db_conn_string=env.str("MONGO_DB_CONNECTION_STRING")
+        db_conn_string=f'mongodb://{env.str("DB_USER")}:{env.str("DB_PASS")}@{env.str("DB_HOST")}/'
     )
