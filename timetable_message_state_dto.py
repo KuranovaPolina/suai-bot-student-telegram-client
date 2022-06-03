@@ -1,6 +1,6 @@
 class TimetableMessageStateDto:
     def __init__(self, user_id: int, dialog_id: int, message_id: int, group: str, timestamp: float, day: int,
-                 week_type: int):
+                 week_type: str):
         self.user_id = user_id
         self.dialog_id = dialog_id
         self.message_id = message_id
