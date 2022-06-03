@@ -56,6 +56,15 @@ class Lesson:
         self.order: str = order
 
 
+def connect_all_elements(list_elements) -> str:
+    result: str = ""
+
+    for element in list_elements:
+        result += '\n\t' + element
+
+    return result
+
+
 def format_timetable_text(week_type: str, week_day: int, lessons: list) -> str:
     day_lessons = find_all_day_lessons(week_type, week_day, lessons)
 
@@ -71,10 +80,10 @@ def format_timetable_text(week_type: str, week_day: int, lessons: list) -> str:
     for lesson in day_lessons:
         result += f'\n<b>{lesson.order}.</b> {lesson.start_time} - {lesson.end_time}\n' \
                   f'<b>Предмет:</b> {lesson.name}, {lesson.lesson_type}\n' \
-                  f'<b>Преподаватели:</b> {[]}\n' \
-                  f'<b>Аудитории:</b> {[]}\n' \
+                  f'<b>Преподаватели:</b> {connect_all_elements(lesson.teachers)}\n' \
+                  f'<b>Аудитории:</b> {connect_all_elements(lesson.class_rooms)}\n' \
                   f'<b>Корпус:</b> {lesson.building}\n' \
-                  f'<b>Группы:</b> {[]}\n'
+                  f'<b>Группы:</b> {connect_all_elements(lesson.groups)}\n'
 
     return result
 
