@@ -30,7 +30,7 @@ def find_all_teachers(key_string: str) -> list:
     return teachers
 
 
-def format_timetable_text(teacher: Teacher) -> str:
+def format_teacher_info_text(teacher: Teacher) -> str:
     result: str = f'\n<i>{teacher.name}.</i>\n' \
                   f'<b>Академическая степень</b> {teacher.academic_degree}\n' \
                   f'<b>Должность</b> {teacher.position}\n' \
