@@ -54,12 +54,30 @@ class Teacher:
                       f'<b>Аудитория</b>: {self.class_room}\n'
 
         if self.phone != "":
-            result += f'<b>Номер</b> {self.phone}\n'
+            result += f'<b>Номер</b>: {self.phone}\n'
 
         if self.email != "":
-            result += f'<b>Почта</b> {self.email}\n'
+            result += f'<b>Почта</b>: {self.email}\n'
 
         return result
+
+
+def create_positions(teacher: dict) -> list:
+    positions = []
+    for position in teacher["Positions"]:
+        positions.append(Position(position["Institute"],
+                                  position["Department"],
+                                  position["Position"]))
+
+    return positions
+
+
+def create_academic_degrees(teacher: dict) -> list:
+    academic_degrees = []
+    for academic_degree in teacher["AcademicDegrees"]:
+        academic_degrees.append(academic_degree)
+
+    return academic_degrees
 
 
 def find_all_teachers(key_string: str) -> list:
@@ -68,9 +86,9 @@ def find_all_teachers(key_string: str) -> list:
     for teacher in get_official_teacher_info_data(key_string)["Teachers"]:
 
         teachers.append(Teacher(teacher["FirstName"], teacher["SecondName"], teacher["LastName"],
-                                [],
+                                create_positions(teacher),
                                 teacher["Phone"], teacher["Email"],
                                 teacher["TeacherDegree"], teacher["ClassRoom"],
-                                ["1", "2"]))
+                                create_academic_degrees(teacher)))
 
     return teachers

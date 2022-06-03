@@ -63,4 +63,4 @@ def get_official_teacher_info_data(last_name: str = "Аграновский") ->
     # }
 
 
-print(get_official_teacher_info_data())
+# print(get_official_teacher_info_data())
