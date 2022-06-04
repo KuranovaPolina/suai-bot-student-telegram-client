@@ -1,4 +1,4 @@
-from official_data.official_timetable_data import get_official_teacher_info_data
+from official_data.official_timetable_data import get_official_timetable_data
 
 days_name = {
     0: "Вне сетки расписания",
@@ -100,7 +100,7 @@ def create_elements_list(lesson: dict, key: str) -> list:
 def find_all_lessons(key_string: str) -> tuple:
     lessons = []
 
-    data = get_official_teacher_info_data(key_string)
+    data = get_official_timetable_data(key_string)
 
     for lesson in data["Lessons"]:
         lessons.append(Lesson(create_elements_list(lesson, "Groups"), create_elements_list(lesson, "Teachers"),
@@ -119,5 +119,7 @@ def find_all_day_lessons(week_type: str, week_day: int, lessons: list) -> list:
     for lesson in lessons:
         if week_type in lesson.week_types and (week_day == lesson.week_day):
             day_lessons.append(lesson)
+
+    day_lessons = sorted(day_lessons, key=lambda x: x.order)
 
     return day_lessons
