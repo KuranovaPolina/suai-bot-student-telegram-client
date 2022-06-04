@@ -88,9 +88,18 @@ class TimetableService:
         else:
             state.day -= 1
 
-        edited_msg = await call.message.edit_text(text=format_timetable_text(state.week_type, state.day,
-                                                                             users[state.user_id].user_lessons),
-                                                  parse_mode="HTML")
+        if (state.user_id in users):
+            edited_msg = await call.message.edit_text(text=format_timetable_text(state.week_type, state.day,
+                                                                                 users[state.user_id].user_lessons),
+                                                      parse_mode="HTML")
+        else:
+            users[state.user_id] = User(user_day=Day(state.week_type, state.day),
+                                        user_group_number=state.group,
+                                        user_lessons=find_all_lessons(state.group)[1])
+            edited_msg = await call.message.edit_text(text=format_timetable_text(state.week_type, state.day,
+                                                                                 users[state.user_id].user_lessons),
+                                                      parse_mode="HTML")
+
         await call.message.edit_reply_markup(reply_markup=days_scroll)
 
         state.timestamp = edited_msg.edit_date.timestamp()
@@ -120,9 +129,18 @@ class TimetableService:
         else:
             state.day += 1
 
-        edited_msg = await call.message.edit_text(text=format_timetable_text(state.week_type, state.day,
-                                                                             users[state.user_id].user_lessons),
-                                                  parse_mode="HTML")
+        if (state.user_id in users):
+            edited_msg = await call.message.edit_text(text=format_timetable_text(state.week_type, state.day,
+                                                                                 users[state.user_id].user_lessons),
+                                                      parse_mode="HTML")
+        else:
+            users[state.user_id] = User(user_day=Day(state.week_type, state.day),
+                                        user_group_number=state.group,
+                                        user_lessons=find_all_lessons(state.group)[1])
+            edited_msg = await call.message.edit_text(text=format_timetable_text(state.week_type, state.day,
+                                                                                 users[state.user_id].user_lessons),
+                                                      parse_mode="HTML")
+
         await call.message.edit_reply_markup(reply_markup=days_scroll)
 
         state.timestamp = edited_msg.edit_date.timestamp()
@@ -147,9 +165,19 @@ class TimetableService:
         logging.info(f"{callback_data=}")
 
         state.week_type = 'нижняя' if state.week_type == 'верхняя' else 'верхняя'
-        edited_msg = await call.message.edit_text(text=format_timetable_text(state.week_type, state.day,
-                                                                             users[state.user_id].user_lessons),
-                                                  parse_mode="HTML")
+
+        if (state.user_id in users):
+            edited_msg = await call.message.edit_text(text=format_timetable_text(state.week_type, state.day,
+                                                                                 users[state.user_id].user_lessons),
+                                                      parse_mode="HTML")
+        else:
+            users[state.user_id] = User(user_day=Day(state.week_type, state.day),
+                                        user_group_number=state.group,
+                                        user_lessons=find_all_lessons(state.group)[1])
+            edited_msg = await call.message.edit_text(text=format_timetable_text(state.week_type, state.day,
+                                                                                 users[state.user_id].user_lessons),
+                                                      parse_mode="HTML")
+
         await call.message.edit_reply_markup(reply_markup=days_scroll)
 
         state.timestamp = edited_msg.edit_date.timestamp()
